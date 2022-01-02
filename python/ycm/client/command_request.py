@@ -134,7 +134,13 @@ class CommandRequest( BaseRequest ):
         [ vimsupport.BuildQfListItem( x ) for x in self._response ] )
       vimsupport.OpenQuickFixList( focus = True, autoclose = True )
     else:
-      vimsupport.JumpToLocation( self._response[ 'filepath' ],
+      if "description" in self._response:
+          if "switch" == self._response[ 'description' ]:
+              vimsupport.JumpToBufferOrFile( self._response[ 'filepath' ],
+                      modifiers,
+                      buffer_command )
+      else:
+          vimsupport.JumpToLocation( self._response[ 'filepath' ],
                                  self._response[ 'line_num' ],
                                  self._response[ 'column_num' ],
                                  modifiers,

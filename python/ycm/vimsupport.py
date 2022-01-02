@@ -552,6 +552,19 @@ def GetVimCommand( user_command, default = 'edit' ):
     vim_command = 'split'
   return vim_command
 
+def JumpToBufferOrFile( filepath, modifiers, buffer_command ):
+  found = False
+  for buf in vim.buffers:
+      if filepath == buf.name:
+          vim.command(f'b {buf.number}')
+          found = True
+          break
+  if not found:
+      JumpToLocation( filepath,
+              1,
+              1,
+              modifiers,
+              buffer_command )
 
 def JumpToFile( filename, command, modifiers ):
   vim_command = GetVimCommand( command )
