@@ -600,11 +600,20 @@ def JumpToFile( filename, command, modifiers ):
     return False
   return True
 
+def JumpToBufferOrFile( filename ):
+    for b in vim.buffers:
+        if b.name == filename:
+            vim.command(f"b {filename}")
+            return True
+    vim.command(f"e {filename}")
 
 # Both |line| and |column| need to be 1-based
-def JumpToLocation( filename, line, column, modifiers, command ):
+def JumpToLocation( filename, line, column, file_only, modifiers, command ):
   # Add an entry to the jumplist
   vim.command( "normal! m'" )
+
+  if file_only:
+      return JumpToBufferOrFile(filename)
 
   if filename != GetCurrentBufferFilepath():
     # We prefix the command with 'keepjumps' so that opening the file is not
