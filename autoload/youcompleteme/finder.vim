@@ -360,6 +360,7 @@ function! s:PopupClosed( id, selected ) abort
           \ filename = vimsupport.ToUnicode( vim.eval( 'selected.filepath' ) ),
           \ line = int( vim.eval( 'selected.line_num' ) ),
           \ column = int( vim.eval( 'selected.column_num' ) ),
+          \ file_only = 0,
           \ modifiers = '',
           \ command = 'same-buffer'
           \ )
